@@ -78,22 +78,17 @@ class AERSufficientStatistics:
         return 1 - (self.a_and_s + self.a_and_p) / (self.a + self.s)
 
 
-def test(path):
+def test(gold_path, predictions_path):
     from random import random
-    # 1. Read in gold alignments
-    gold_sets = read_naacl_alignments(path)
+    # Read in gold alignments
+    gold_sets = read_naacl_alignments(gold_path)
 
-    # 2. Here you would have the predictions of your own algorithm, 
-    #  for the sake of the illustration, I will cheat and make some predictions by corrupting 50% of sure gold alignments
-    predictions = []
-    for s, p in gold_sets:
-        links = set()
-        for link in s:
-            if random() < 0.5:
-                links.add(link)
-        predictions.append(links)
+    # Read predicted alignments
+    predictions = [p for _,p in read_naacl_alignments(predictions_path)] # We produce only possible ones
 
-    # 3. Compute AER
+#    print(predictions)
+    
+    # Compute AER
 
     # first we get an object that manages sufficient statistics 
     metric = AERSufficientStatistics()
@@ -104,5 +99,7 @@ def test(path):
     print(metric.aer())
 
 
-if __name__ == '__main__':
-    test('validation/dev.wa.nonullalign')
+#if __name__ == '__main__':
+ #   test('validation/dev.wa.nonullalign')
+ 
+test('data/validation/dev.wa.nonullalign', 'epoch10_fe.align')

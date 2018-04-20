@@ -96,7 +96,7 @@ def test(gold_path, predictions_path):
     for gold, pred in zip(gold_sets, predictions):
         metric.update(sure=gold[0], probable=gold[1], predicted=pred)
     # AER
-    print(metric.aer())
+    return metric.aer()
 
 
 #if __name__ == '__main__':

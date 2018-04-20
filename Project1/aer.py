@@ -79,15 +79,12 @@ class AERSufficientStatistics:
 
 
 def test(gold_path, predictions_path):
-    from random import random
     # Read in gold alignments
     gold_sets = read_naacl_alignments(gold_path)
 
     # Read predicted alignments
     predictions = [p for _,p in read_naacl_alignments(predictions_path)] # We produce only possible ones
 
-#    print(predictions)
-    
     # Compute AER
 
     # first we get an object that manages sufficient statistics 

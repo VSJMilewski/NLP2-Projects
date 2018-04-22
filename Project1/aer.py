@@ -99,4 +99,4 @@ def test(gold_path, predictions_path):
 #if __name__ == '__main__':
  #   test('validation/dev.wa.nonullalign')
  
-test('data/validation/dev.wa.nonullalign', 'epoch10_fe.align')
+#test('data/validation/dev.wa.nonullalign', 'epoch10_fe.align')

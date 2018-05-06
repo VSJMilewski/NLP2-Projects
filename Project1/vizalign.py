@@ -158,9 +158,9 @@ def draw_weighted_alignment(pred_path, naacl_path, french_path, english_path, fi
     n = open(naacl_path, 'r', encoding='utf-8')
     alignments = defaultdict(list)
     line = n.readline().split()
-    while line[0] != str(sentence):
+    while int(line[0]) != sentence:
         line = n.readline().split()
-    while line[0] != str(sentence+1):
+    while int(line[0]) != sentence+1:
         if sure:
             if line[-1] != 'P':
                 alignments[int(line[2])-1].append(int(line[1])-1)
@@ -183,10 +183,10 @@ def draw_weighted_alignment(pred_path, naacl_path, french_path, english_path, fi
     alignments_pred = defaultdict(list)
     line_pred = n_pred.readline().split()
     
-    while line_pred[0] != str(sentence):
+    while int(line_pred[0]) != sentence:
         line_pred = n_pred.readline().split()
         
-    while line_pred[0] != str(sentence+1):
+    while int(line_pred[0]) != sentence+1:
         
         alignments_pred[int(line_pred[2])-1].append(int(line_pred[1])-1)
         raw_line_pred.append(float(line_pred[-1]))
@@ -218,16 +218,17 @@ def draw_weighted_alignment(pred_path, naacl_path, french_path, english_path, fi
 #draw_weighted_alignment(pred_path, naacl_path, french_path, english_path, fig_path, sure=False)
 
 
-gold_path = 'data/validation/dev.wa.nonullalign' 
-french_path = 'data/validation/dev.f'
-english_path = 'data/validation/dev.e'
-pred_path_format = 'data/alignments/{}.align'
+gold_path = 'data/testing/answers/test.wa.nonullalign' 
+french_path = 'data/testing/test/test.f'
+english_path = 'data/testing/test/test.e'
+pred_path_format = 'reportAlignments/{}.naacl'
 
-alignments_dir = 'data/alignments'
+alignments_dir = 'reportAlignments'
 for file in os.listdir(alignments_dir):
-    if file.endswith('.align'):        
+    if file.endswith('.naacl'):
         pred_path = '{}/{}'.format(alignments_dir, file)
-        align_id = file.split('.')[0]
-        fig_path = '{}/figures/{}.png'.format(alignments_dir, align_id)       
-        draw_weighted_alignment(pred_path, gold_path, french_path, english_path, fig_path, sure=False)
+        align_id = file[:-6]
+        sentence_id = 9
+        fig_path = '{}/figures/{}_sentence_{}.png'.format(alignments_dir, align_id, sentence_id)
+        draw_weighted_alignment(pred_path, gold_path, french_path, english_path, fig_path, sure=False, sentence=sentence_id)
 
